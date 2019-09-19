@@ -1,0 +1,28 @@
+buildscript {
+    apply from: './dependencies.gradle'
+    repositories {
+        jcenter()
+        google()
+        mavenCentral()
+        mavenLocal()
+        maven {
+            url 'https://maven.fabric.io/public'
+        }
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:"+ versions.gradle
+        classpath "com.google.gms:google-services:"+ versions.gms
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+        maven { url "https://dl.bintray.com/drummer-aidan/maven/" }
+        maven { url "https://maven.google.com" }
+        mavenLocal()
+    }
+}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".activities.LandingActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:text="Silahkan Masukan No MedRek"/>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/InputTextWrap"
+        android:hint="No Med Rek">
+        <com.google.android.material.textfield.TextInputEditText
+            style="@style/InputText"
+            android:drawableLeft="@drawable/ic_today"
+            android:focusedByDefault="false"
+            android:inputType="number"
+            android:id="@+id/input_medrek"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <Button
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:textColor="@android:color/primary_text_dark_nodisable"
+        android:textStyle="bold"
+        android:id="@+id/btn_login_pendaftaran"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorPrimary"
+        android:text="Submit"
+        android:textAllCaps="false"
+        />
+
+</LinearLayout>

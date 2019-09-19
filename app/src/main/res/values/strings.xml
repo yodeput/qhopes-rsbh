@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">RSBH Purwakarta</string>
+
+    <string name="title_beranda">Home</string>
+    <string name="title_myappointment">Appointment</string>
+    <string name="title_daftar">Daftar</string>
+    <string name="title_diagnosis">Diagnosis</string>
+    <string name="title_akun">Account</string>
+    <string name="title_menu_hariini">Jadwal hari ini</string>
+
+    <string name="main_menu1">Dokter</string>
+    <string name="main_menu2">Daftar</string>
+    <string name="main_menu3">Informasi</string>
+
+    <string name="tbtn_menu_hari_ini">Hari ini</string>
+    <string name="tbtn_menu_minggu_ini">Minggu ini</string>
+    <string name="tbtn_menu_berita">Berita</string>
+    <string name="tbtn_menu_spesialis">Spesialis</string>
+    <string name="tbtn_menu_info">Info</string>
+    <string name="tbtn_menu_kontak">Kontak</string>
+    <string name="lorem">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
+    <string name="dokter">Dokter</string>
+    <string name="pasien">Pasien</string>
+    <string name="role">Masuk sebagai:</string>
+    <string name="landing_greeting">Selamat Datang</string>
+</resources>

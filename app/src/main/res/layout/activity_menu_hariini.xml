@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.qtasnim.qhopes.activities.MenuHariIniActivity"
+    android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_curent_update_menu_hariini"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_vertical_margin"
+            android:layout_gravity="start"
+            />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_menu_hariini"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            />
+</LinearLayout>
