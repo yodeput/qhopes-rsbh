@@ -36,7 +36,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal">
 
-                        <com.synnapps.carouselview.CarouselView
+                        <!--<com.synnapps.carouselview.CarouselView
                             android:id="@+id/carousel_view"
                             android:layout_width="match_parent"
                             android:layout_height="180dp"
@@ -45,7 +45,18 @@
                             app:radius="6dp"
                             app:slideInterval="3000"
                             app:strokeColor="#FF777777"
-                            app:strokeWidth="0dp" />
+                            app:strokeWidth="0dp" />-->
+                        <com.smarteist.autoimageslider.SliderView
+                            android:id="@+id/sliderView"
+                            android:layout_width="match_parent"
+                            android:layout_height="180dp"
+                            app:sliderAutoCycleDirection="back_and_forth"
+                            app:sliderCircularHandlerEnabled="true"
+                            app:sliderIndicatorGravity="center_horizontal|bottom"
+                            app:sliderIndicatorMargin="35dp"
+                            app:sliderIndicatorOrientation="horizontal"
+                            app:sliderIndicatorPadding="3dp"
+                            app:sliderIndicatorRadius="2dp"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>

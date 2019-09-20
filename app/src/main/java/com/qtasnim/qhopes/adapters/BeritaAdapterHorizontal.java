@@ -8,20 +8,29 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.qtasnim.qhopes.R;
-import com.qtasnim.qhopes.models.BeritaModel;
-
-import java.lang.reflect.Field;
-import java.util.ArrayList;
+import com.qtasnim.qhopes.models.response.Berita;
+import java.util.List;
 
 public class BeritaAdapterHorizontal extends RecyclerView.Adapter<BeritaAdapterHorizontal.MyViewHolder> {
 
-    private ArrayList<BeritaModel> mData;
-    private View.OnClickListener mOnItemClickListener;
+    private List<Berita> mData;
+    private OnItemClickListener mOnItemClickListener;
 
-    public BeritaAdapterHorizontal(ArrayList<BeritaModel> mData) {
+    public interface OnItemClickListener {
+        void onItemClick(View view, Berita obj, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener mItemClickListener) {
+        this.mOnItemClickListener = mItemClickListener;
+    }
+
+    public BeritaAdapterHorizontal(List<Berita> mData) {
         this.mData = mData;
     }
+
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -32,36 +41,34 @@ public class BeritaAdapterHorizontal extends RecyclerView.Adapter<BeritaAdapterH
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        BeritaModel currentModel = mData.get(position);
-        holder.mJudul.setText(currentModel.getJudul());
-        holder.mFoto.setImageResource(getResId(currentModel.getFoto(),R.drawable.class));
-        holder.mFoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        holder.mKonten.setText(currentModel.getKonten());
+        Berita model = mData.get(position);
+        holder.mJudul.setText(model.getTitle());
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .error(R.drawable.ic_broken_image);
+        Glide.with(holder.mFoto)
+                .load(model.getImage())
+                .apply(options)
+                .into(holder.mFoto);
+        holder.mKonten.setText(model.getContent());
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mOnItemClickListener == null) return;
+               mOnItemClickListener.onItemClick(view, model,position);
+            }
+        });
     }
 
-    public static int getResId(String resName, Class<?> c) {
-
-        try {
-            Field idField = c.getDeclaredField(resName);
-            return idField.getInt(idField);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return -1;
-        }
-    }
 
     @Override
     public int getItemCount() {
         return mData.size();
     }
 
-    //TODO: Step 2 of 4: Assign itemClickListener to your local View.OnClickListener variable
-    public void setOnItemClickListener(View.OnClickListener itemClickListener) {
-        mOnItemClickListener = itemClickListener;
-    }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-
+        private View view;
         private TextView mJudul, mKonten;
         private ImageView mFoto;
 
@@ -71,9 +78,7 @@ public class BeritaAdapterHorizontal extends RecyclerView.Adapter<BeritaAdapterH
             mJudul = itemView.findViewById(R.id.txt_title);
             mFoto = itemView.findViewById(R.id.img_thumb);
             mKonten = itemView.findViewById(R.id.txt_description);
-
-            itemView.setTag(this);
-            itemView.setOnClickListener(mOnItemClickListener);
+            this.view = itemView;
         }
     }
 }

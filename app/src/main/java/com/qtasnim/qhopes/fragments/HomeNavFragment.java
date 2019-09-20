@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.qtasnim.qhopes.R;
 import com.qtasnim.qhopes.activities.MainActivity;
@@ -26,16 +29,28 @@ import com.qtasnim.qhopes.activities.MenuKontakActivity;
 import com.qtasnim.qhopes.activities.MenuMingguiniActivity;
 import com.qtasnim.qhopes.adapters.BeritaAdapter;
 import com.qtasnim.qhopes.adapters.BeritaAdapterHorizontal;
+import com.qtasnim.qhopes.adapters.SliderAdapter;
+import com.qtasnim.qhopes.api.NetworkModule;
+import com.qtasnim.qhopes.api.NetworkService;
 import com.qtasnim.qhopes.models.BeritaModel;
+import com.qtasnim.qhopes.models.response.Berita;
+import com.qtasnim.qhopes.models.response.BeritaResponse;
+import com.qtasnim.qhopes.models.response.Slider;
+import com.qtasnim.qhopes.models.response.SliderResponse;
+import com.smarteist.autoimageslider.SliderView;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class HomeNavFragment extends Fragment {
@@ -56,46 +71,93 @@ public class HomeNavFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private Unbinder unbinder;
     private BeritaAdapterHorizontal mAdapter;
+    private NetworkService mNetworkService;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @BindView(R.id.carousel_view)
-    CarouselView carousel_view;
+    @BindView(R.id.sliderView)
+    SliderView sliderView;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_nav_home, container, false);
         unbinder = ButterKnife.bind(this,rootView);
-        initView();
-
+        mNetworkService = NetworkModule.getClient().create(NetworkService.class);
+        getBerita();
+        getSlider();
         return rootView;
     }
 
-    private void initView(){
+    private void getBerita(){
+        Call<BeritaResponse> beritaReq = mNetworkService.getBerita();
+        beritaReq.enqueue(new Callback<BeritaResponse>() {
+            @Override
+            public void onResponse(Call<BeritaResponse> call, Response<BeritaResponse> response) {
+                if(response.isSuccessful()){
+                    generateBeritaView(response.body().getData());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BeritaResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getSlider(){
+        Call<SliderResponse> sliderReq = mNetworkService.getSlider();
+        sliderReq.enqueue(new Callback<SliderResponse>() {
+            @Override
+            public void onResponse(Call<SliderResponse> call, Response<SliderResponse> response) {
+                if(response.isSuccessful()){
+                    generateSliderView(response.body().getData());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SliderResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void generateBeritaView(List<Berita> beritaList){
+        mAdapter = new BeritaAdapterHorizontal(beritaList);
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        ArrayList<BeritaModel> mModelData = new ArrayList<>();
-        mModelData.add(new BeritaModel("Pelatihan Pemadaman Kebakaran", "15/05/2019", "foto_berita", "RS. Bhakti Husada Cikarang melakukan pelatihan pemadam kebakaran terhadap semua staff dan karyawan yang dilaksanakn setiap tahun dan bekerja sama dengan tim pemadam kebakaran Kab. Bekasi"));
-        mModelData.add(new BeritaModel("ISPA", "10/10/17", "foto_berita2", "ISPA adalah kepanjanngan dari Infeksi Saluran Pernafasan Akut yang berarti terjadinya infeksi yang parah pada bagian sinus, tenggorokan, saluran udara, atau paru-paru. Kondisi ini menyebabkan fungsi pernafasan menjadi terganggu. Jika tidak segera ditangani, ISPA dapat menyebar ke seluruh sistem pernafasan tubuh bahkan dapat menyebabkan kematian."));
-        mAdapter = new BeritaAdapterHorizontal(mModelData);
+        mAdapter = new BeritaAdapterHorizontal(beritaList);
+        mAdapter.setOnItemClickListener(new BeritaAdapterHorizontal.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, Berita obj, int position) {
+                Log.e("berita click", obj.getTitle());
+            }
+        });
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
-
-        carousel_view.setPageCount(sampleImages.length);
-        carousel_view.setImageListener(imageListener);
-
     }
 
 
-    private ImageListener imageListener = new ImageListener() {
-        @Override
-        public void setImageForPosition(int position, ImageView imageView) {
-            imageView.setImageResource(sampleImages[position]);
-        }
-    };
-    // TODO: Rename method, update argument and hook method into UI event
+
+    private void generateSliderView(List<Slider> sliderList){
+        SliderAdapter sliderAdapter = new SliderAdapter(sliderList);
+        sliderAdapter.setOnItemClickListener(new SliderAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, Slider obj, int position) {
+                Log.e("slider click", obj.getDesc());
+            }
+        });
+        sliderView.setSliderAdapter(sliderAdapter);
+        sliderView.setIndicatorSelectedColor(getActivity().getResources().getColor(R.color.colorPrimary));
+        sliderView.setIndicatorUnselectedColor(getActivity().getResources().getColor(R.color.white));
+        sliderView.setScrollTimeInSec(4); //set scroll delay in seconds :
+        sliderView.startAutoCycle();
+    }
+
+
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);

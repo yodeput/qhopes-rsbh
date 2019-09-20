@@ -18,19 +18,29 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.qtasnim.qhopes.R;
+import com.qtasnim.qhopes.adapters.BeritaAdapter;
+import com.qtasnim.qhopes.adapters.BeritaAdapterHorizontal;
 import com.qtasnim.qhopes.adapters.ViewPagerAdapter;
+import com.qtasnim.qhopes.api.NetworkModule;
+import com.qtasnim.qhopes.api.NetworkService;
 import com.qtasnim.qhopes.misc.BottomNavigationViewHelper;
 import com.qtasnim.qhopes.models.DokterModel;
 import com.qtasnim.qhopes.fragments.AppointmentNavFragment;
 import com.qtasnim.qhopes.fragments.DiagnosisNavFragment;
 import com.qtasnim.qhopes.fragments.HomeNavFragment;
+import com.qtasnim.qhopes.models.response.Berita;
+import com.qtasnim.qhopes.models.response.BeritaResponse;
 import com.qtasnim.qhopes.utils.CustomDialog;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivityPasien extends AppCompatActivity {
 
@@ -66,6 +76,7 @@ public class MainActivityPasien extends AppCompatActivity {
     private void initClass(){
         cd = new CustomDialog(this);
     }
+
 
     private void initView(){
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

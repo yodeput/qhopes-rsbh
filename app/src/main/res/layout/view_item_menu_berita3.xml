@@ -47,7 +47,6 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="false"
                     android:layout_centerHorizontal="false"
-                    android:scaleType="center"
                     android:maxWidth="150dp"
                     android:maxHeight="150dp"
                     android:visibility="visible"

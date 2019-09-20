@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/imgSlider"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/overlay_dark_50"
+        android:layout_alignBottom="@id/imgSlider"
+        android:gravity="center_vertical">
+    <TextView
+        android:id="@+id/txtSlider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:maxLines="1"
+        android:text="Deskripsi image slider"
+        android:textColor="@color/white"/>
+    </LinearLayout>
+
+
+</RelativeLayout>
