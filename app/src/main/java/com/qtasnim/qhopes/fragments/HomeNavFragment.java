@@ -1,13 +1,16 @@
 package com.qtasnim.qhopes.fragments;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.qtasnim.qhopes.R;
 import com.qtasnim.qhopes.activities.MainActivity;
 import com.qtasnim.qhopes.activities.MenuBeritaActivity;
@@ -27,6 +31,7 @@ import com.qtasnim.qhopes.activities.MenuHariIniActivity;
 import com.qtasnim.qhopes.activities.MenuInfoActivity;
 import com.qtasnim.qhopes.activities.MenuKontakActivity;
 import com.qtasnim.qhopes.activities.MenuMingguiniActivity;
+import com.qtasnim.qhopes.activities.PendaftaranActivity;
 import com.qtasnim.qhopes.adapters.BeritaAdapter;
 import com.qtasnim.qhopes.adapters.BeritaAdapterHorizontal;
 import com.qtasnim.qhopes.adapters.SliderAdapter;
@@ -77,6 +82,8 @@ public class HomeNavFragment extends Fragment {
     RecyclerView recyclerView;
     @BindView(R.id.sliderView)
     SliderView sliderView;
+    @BindView(R.id.btn_antrian1)
+    FloatingActionButton btn_antrian1;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -86,7 +93,64 @@ public class HomeNavFragment extends Fragment {
         mNetworkService = NetworkModule.getClient().create(NetworkService.class);
         getBerita();
         getSlider();
+
+        btn_antrian1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog();
+            }
+        });
+
         return rootView;
+    }
+
+    private void showDialog() {
+
+        Dialog pasien = new Dialog(getActivity());
+        pasien.setContentView(R.layout.view_dialog_popup_pilihan);
+        Button pasien_lama = pasien.findViewById(R.id.btn_pasien_lama);
+        Button pasien_baru = pasien.findViewById(R.id.btn_pasien_baru);
+
+        pasien_lama.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pasien.dismiss();
+
+                Dialog Medrek = new Dialog(getActivity());
+                Medrek.setContentView(R.layout.view_dialog_medrek_form1);
+                TextInputEditText noMedrek = Medrek.findViewById(R.id.input_medrek1);
+                TextInputEditText noTanggal = Medrek.findViewById(R.id.input_tanggal);
+                Button confirmMedrek = Medrek.findViewById(R.id.btn_confirm_medrek);
+
+                confirmMedrek.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        String NoMedrek = noMedrek.getText().toString();
+                        String NoTanggalLahir = noTanggal.getText().toString();
+
+                        if (TextUtils.isEmpty(NoMedrek)&&TextUtils.isEmpty(NoTanggalLahir)){
+
+                            Dialog emptyMedrek = new Dialog(getActivity());
+                            emptyMedrek.setContentView(R.layout.view_dialog_medrek_empty);
+                            emptyMedrek.show();
+
+                        }else {
+
+                            Intent konfirmasiMedrek = new Intent(getActivity(), PendaftaranActivity.class);
+                            startActivity(konfirmasiMedrek);
+
+                        }
+
+                    }
+                });
+
+                Medrek.show();
+            }
+        });
+
+        pasien.show();
+
     }
 
     private void getBerita(){

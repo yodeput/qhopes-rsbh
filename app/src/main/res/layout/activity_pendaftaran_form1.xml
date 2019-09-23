@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.PendaftaranActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama Poliklinik"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="15dp"
+            app:cardCornerRadius="5dp"
+            android:layout_marginTop="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/InputTextWrap"
+                    android:hint="Pilih Poliklinik">
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/InputText"
+                        android:focusable="false"
+                        android:drawableLeft="@drawable/ic_user"
+                        android:drawableRight="@drawable/ic_chevron_down"
+                        android:inputType="textPersonName"
+                        android:id="@+id/input_pilih_poliklinik1"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama Dokter"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="15dp"
+            app:cardCornerRadius="5dp"
+            android:layout_marginTop="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/InputTextWrap"
+                    android:hint="Pilih Dokter">
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/InputText"
+                        android:focusable="false"
+                        android:drawableLeft="@drawable/ic_user"
+                        android:drawableRight="@drawable/ic_chevron_down"
+                        android:inputType="textPersonName"
+                        android:id="@+id/input_pilih_dokter1"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tanggal"/>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="15dp"
+            app:cardCornerRadius="5dp"
+            android:layout_marginTop="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/InputTextWrap"
+                    android:hint="Tanggal">
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/InputText"
+                        android:drawableLeft="@drawable/ic_calendar"
+                        android:drawableRight="@drawable/ic_chevron_down"
+                        android:inputType="textPersonName"
+                        android:focusable="false"
+                        android:id="@+id/input_pilih_tanggal1"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Jam"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="15dp"
+            app:cardCornerRadius="5dp"
+            android:layout_marginTop="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/InputTextWrap"
+                    android:hint="Jam">
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/InputText"
+                        android:drawableLeft="@drawable/ic_clock"
+                        android:drawableRight="@drawable/ic_chevron_down"
+                        android:focusable="false"
+                        android:id="@+id/input_pilih_jam1"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Daftar"
+            android:textColor="@color/white"
+            android:background="@color/colorPrimary"
+            android:id="@+id/btn_confirm_pendaftaran1"/>
+
+    </LinearLayout>
+
+</LinearLayout>

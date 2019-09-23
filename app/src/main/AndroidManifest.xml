@@ -59,6 +59,9 @@
         <activity android:name=".activities.MenuInfoActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"/>
+        <activity android:name=".activities.PendaftaranActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>
