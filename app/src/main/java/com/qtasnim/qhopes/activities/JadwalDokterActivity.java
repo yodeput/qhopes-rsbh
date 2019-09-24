@@ -63,6 +63,8 @@ public class JadwalDokterActivity extends AppCompatActivity {
     private List<JadwalDokter> dokterList;
     private NetworkService mNetworkService;
 
+
+
     @BindView(R.id.lytParent)
     LinearLayout lytParent;
     @BindView(R.id.lytError)
@@ -170,6 +172,11 @@ public class JadwalDokterActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View view, JadwalDokter obj, int position) {
                 Log.e("Dokter",obj.getNamaDokter());
+                Intent data = new Intent();
+                data.putExtra("Poli", obj.getPoli());
+                data.putExtra("Dokter", obj.getNamaDokter());
+                setResult(RESULT_OK, data);
+                finish();
             }
         });
         shimmer.startShimmer();
