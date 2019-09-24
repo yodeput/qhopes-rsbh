@@ -1,21 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:id="@+id/lytParent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.qtasnim.qhopes.activities.MenuHariIniActivity"
-    android:orientation="vertical">
-        <TextView
-            android:id="@+id/tv_curent_update_menu_hariini"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/top_app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_vertical_margin"
-            android:layout_gravity="start"
-            />
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_menu_hariini"
+            android:background="@color/white"
+            app:elevation="0dp">
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/actionBarSize"
+                    app:contentInsetEnd="0dp"
+                    app:contentInsetLeft="0dp"
+                    app:contentInsetRight="0dp"
+                    app:contentInsetStart="0dp"
+                    android:layout_marginStart="0dp">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                                <ImageView
+                                    android:id="@+id/imgLogo"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    app:srcCompat="@drawable/logo_rs"
+                                    android:layout_centerVertical="true"
+                                    android:visibility="gone"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                                    android:text="@string/title_dokter"
+                                    android:layout_centerVertical="true"
+                                    android:layout_toRightOf="@id/imgLogo"/>
+                        </RelativeLayout>
+                </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical"
-            />
+            android:layout_height="match_parent">
+                <include layout="@layout/shimmer_poli"/>
+                <include layout="@layout/dialog_error_connection"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="2dp"
+                    android:scrollbars="vertical"
+                    />
+        </RelativeLayout>
+
 </LinearLayout>

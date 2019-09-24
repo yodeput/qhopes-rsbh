@@ -159,7 +159,7 @@ public class MenuHariIniActivity extends AppCompatActivity {
 
     private void setActionBar() {
         Objects.requireNonNull(getSupportActionBar()).show();
-        Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.title_menu_hariini));
+        Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.title_dokter));
         ArrayList<View> textViews = new ArrayList<>();
         getWindow().getDecorView().findViewsWithText(textViews, getTitle(), View.FIND_VIEWS_WITH_TEXT);
         if (textViews.size() > 0) {

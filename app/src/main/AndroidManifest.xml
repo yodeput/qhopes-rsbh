@@ -62,6 +62,9 @@
         <activity android:name=".activities.PendaftaranActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"/>
+        <activity android:name=".activities.JadwalDokterActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

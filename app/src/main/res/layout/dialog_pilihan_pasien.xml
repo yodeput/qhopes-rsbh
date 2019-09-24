@@ -7,25 +7,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:padding="20dp">
 
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:layout_margin="10dp"
-            android:text="  Pasien \n Lama"
+            android:text="Pasien\nLama"
             android:id="@+id/btn_pasien_lama"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:textAlignment="center"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:layout_margin="10dp"
-            android:text="  Pasien \n Baru"
+            android:text="Pasien\nBaru"
             android:id="@+id/btn_pasien_baru"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:textAlignment="center"/>
 
     </LinearLayout>
 

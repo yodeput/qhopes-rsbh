@@ -155,7 +155,7 @@
                                     android:orientation="vertical">
 
                                     <com.google.android.material.floatingactionbutton.FloatingActionButton
-                                        android:id="@+id/btn_antrian1"
+                                        android:id="@+id/btn_antrian"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:elevation="0dp"

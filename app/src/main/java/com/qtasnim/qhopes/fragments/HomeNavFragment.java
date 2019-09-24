@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,38 +19,25 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.qtasnim.qhopes.R;
-import com.qtasnim.qhopes.activities.MainActivity;
-import com.qtasnim.qhopes.activities.MenuBeritaActivity;
-import com.qtasnim.qhopes.activities.MenuHariIniActivity;
-import com.qtasnim.qhopes.activities.MenuInfoActivity;
-import com.qtasnim.qhopes.activities.MenuKontakActivity;
-import com.qtasnim.qhopes.activities.MenuMingguiniActivity;
+import com.qtasnim.qhopes.activities.JadwalDokterActivity;
 import com.qtasnim.qhopes.activities.PendaftaranActivity;
-import com.qtasnim.qhopes.adapters.BeritaAdapter;
 import com.qtasnim.qhopes.adapters.BeritaAdapterHorizontal;
 import com.qtasnim.qhopes.adapters.SliderAdapter;
 import com.qtasnim.qhopes.api.NetworkModule;
 import com.qtasnim.qhopes.api.NetworkService;
-import com.qtasnim.qhopes.models.BeritaModel;
 import com.qtasnim.qhopes.models.response.Berita;
 import com.qtasnim.qhopes.models.response.BeritaResponse;
 import com.qtasnim.qhopes.models.response.Slider;
 import com.qtasnim.qhopes.models.response.SliderResponse;
 import com.smarteist.autoimageslider.SliderView;
-import com.synnapps.carouselview.CarouselView;
-import com.synnapps.carouselview.ImageListener;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -82,8 +68,15 @@ public class HomeNavFragment extends Fragment {
     RecyclerView recyclerView;
     @BindView(R.id.sliderView)
     SliderView sliderView;
-    @BindView(R.id.btn_antrian1)
-    FloatingActionButton btn_antrian1;
+
+    @OnClick(R.id.btn_dokter) void dokter(){
+        startActivity(new Intent(getActivity(), JadwalDokterActivity.class));
+        getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+    }
+
+    @OnClick(R.id.btn_antrian) void antrian(){
+        showDialog();
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -94,20 +87,13 @@ public class HomeNavFragment extends Fragment {
         getBerita();
         getSlider();
 
-        btn_antrian1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialog();
-            }
-        });
-
         return rootView;
     }
 
     private void showDialog() {
 
         Dialog pasien = new Dialog(getActivity());
-        pasien.setContentView(R.layout.view_dialog_popup_pilihan);
+        pasien.setContentView(R.layout.dialog_pilihan_pasien);
         Button pasien_lama = pasien.findViewById(R.id.btn_pasien_lama);
         Button pasien_baru = pasien.findViewById(R.id.btn_pasien_baru);
 
