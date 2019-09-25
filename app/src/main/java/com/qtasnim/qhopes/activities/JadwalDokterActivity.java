@@ -31,6 +31,7 @@ import com.qtasnim.qhopes.models.DokterGroup;
 import com.qtasnim.qhopes.models.MenuHariiniModel;
 import com.qtasnim.qhopes.models.response.JadwalDokter;
 import com.qtasnim.qhopes.models.response.JadwalDokterResponse;
+import com.qtasnim.qhopes.utils.CustomDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -58,12 +59,10 @@ import retrofit2.Response;
 public class JadwalDokterActivity extends AppCompatActivity {
 
     private ArrayList<MenuHariiniModel> mModelData = new ArrayList<>();
-    Dialog dialog;
+    private CustomDialog cd;
     private TestExpandAdapter mAdapter;
     private List<JadwalDokter> dokterList;
     private NetworkService mNetworkService;
-
-
 
     @BindView(R.id.lytParent)
     LinearLayout lytParent;
@@ -85,9 +84,14 @@ public class JadwalDokterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_hariini);
         ButterKnife.bind(this);
+        initClass();
         initToolbar();
         mNetworkService = NetworkModule.getClient().create(NetworkService.class);
         getDokter();
+    }
+
+    void initClass(){
+        cd = new CustomDialog(this);
     }
 
     void initToolbar() {

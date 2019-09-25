@@ -1,61 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:padding="20dp"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/transparent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        app:cardCornerRadius="20dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        app:cardBackgroundColor="@color/white">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Silakan Masukkan "
+            android:text="Silakan Masukkan\nNo Rekam Medis Dan Tangal Lahir"
             android:textSize="15dp"
+            android:textAlignment="center"
+            android:textColor="@color/grey_800"
             android:layout_gravity="center_horizontal"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="25dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="No MedRek Dan Tangal Lahir"
-            android:layout_gravity="center_horizontal"
-            android:textSize="15dp"/>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/InputTextWrap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/editNoRm"
+                style="@style/InputText"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:drawableLeft="@drawable/ic_pulse"
+                android:paddingLeft="10dp"
+                android:hint="Nomor Rekam Medik"
+                android:inputType="text"
+                android:digits="1234567890"
+                android:textColor="@color/grey_800" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_marginTop="15dp"
-        style="@style/InputTextWrap"
-        android:hint="No MedRek ">
-        <com.google.android.material.textfield.TextInputEditText
-            style="@style/InputText"
-            android:drawableLeft="@drawable/ic_today"
-            android:inputType="number"
-            android:focusedByDefault="false"
-            android:id="@+id/input_medrek1"/>
-    </com.google.android.material.textfield.TextInputLayout>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/spacing_xmedium" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/InputTextWrap"
-        android:hint="Tanggal Lahir">
-        <com.google.android.material.textfield.TextInputEditText
-            style="@style/InputText"
-            android:drawableLeft="@drawable/ic_calendar"
-            android:focusedByDefault="false"
-            android:inputType="number"
-            android:id="@+id/input_tanggal"/>
-    </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/InputTextWrap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/editTanggal"
+                style="@style/InputText"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+
+                android:drawableLeft="@drawable/ic_today"
+                android:hint="Tanggal Lahir"
+                android:focusable="false"
+                android:clickable="true"
+                android:textColor="@color/grey_800" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View
+        android:layout_width="0dp"
+        android:layout_height="25dp"/>
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:layout_margin="20dp"
+        android:background="@drawable/but_primary"
         android:text="Submit"
         android:textColor="@color/white"
         android:id="@+id/btn_confirm_medrek"/>
+</LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

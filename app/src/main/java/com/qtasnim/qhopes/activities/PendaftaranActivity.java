@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.qtasnim.qhopes.R;
 import com.qtasnim.qhopes.fragments.HomeNavFragment;
 import com.qtasnim.qhopes.models.response.JadwalDokter;
@@ -39,35 +40,27 @@ public class PendaftaranActivity extends AppCompatActivity {
     JadwalDokterActivity jadwalDokterActivity = new JadwalDokterActivity();
     public final int POLI_CODE = 1;
 
-    @BindView(R.id.input_pilih_tanggal1)
-    TextInputEditText input_pilih_tanggal;
-    @BindView(R.id.input_pilih_jam1)
-    TextInputEditText input_pilih_jam1;
-    @BindView(R.id.input_pilih_poliklinik1)
-    TextInputEditText input_pilih_poliklinik1;
-    @BindView(R.id.input_pilih_dokter1)
-    TextInputEditText input_pilih_dokter1;
-    @BindView(R.id.btn_confirm_pendaftaran1)
-    Button btn_confirm_pendaftaran1;
+
+    @BindView(R.id.input_rm)
+    TextInputEditText input_rm;
+    @BindView(R.id.input_poli)
+    TextInputEditText input_poli;
+    @BindView(R.id.input_dokter)
+    TextInputEditText input_dokter;
+    @BindView(R.id.input_tanggal)
+    TextInputEditText input_tanggal;
+    @BindView(R.id.input_jam)
+    TextInputEditText input_jam;
+
+    @BindView(R.id.lyt_input_poli)
+    TextInputLayout lyt_input_poli;
+    @BindView(R.id.lyt_input_dokter)
+    TextInputLayout lyt_input_dokter;
+
+    @BindView(R.id.btn_submit)
+    Button btn_submit;
     @BindView(R.id.toolbarDaftar)
     Toolbar toolbar;
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == POLI_CODE){
-            if (resultCode == RESULT_OK){
-                String poli = data.getExtras().getString("Poli");
-                String dokter = data.getExtras().getString("Dokter");
-
-                input_pilih_poliklinik1.setText(poli);
-                input_pilih_dokter1.setText(dokter);
-
-            }
-        }
-
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,7 +71,7 @@ public class PendaftaranActivity extends AppCompatActivity {
 
         toolbarView();
 
-        input_pilih_poliklinik1.setOnClickListener(new View.OnClickListener() {
+        input_poli.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent Poli = new Intent(PendaftaranActivity.this, JadwalDokterActivity.class);
@@ -86,7 +79,7 @@ public class PendaftaranActivity extends AppCompatActivity {
             }
         });
         
-        input_pilih_jam1.setOnClickListener(new View.OnClickListener() {
+        input_jam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Jam();
@@ -94,7 +87,7 @@ public class PendaftaranActivity extends AppCompatActivity {
         });
 
 
-        input_pilih_tanggal.setOnClickListener(new View.OnClickListener() {
+        input_tanggal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final Calendar cldr = Calendar.getInstance();
@@ -105,7 +98,7 @@ public class PendaftaranActivity extends AppCompatActivity {
                 pickerDialog = new DatePickerDialog(PendaftaranActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        input_pilih_tanggal.setText(dayOfMonth+"-"+(monthOfYear+1)+"-"+year);
+                        input_tanggal.setText(dayOfMonth+"-"+(monthOfYear+1)+"-"+year);
 
                     }
                 }, year, month, day);
@@ -115,12 +108,32 @@ public class PendaftaranActivity extends AppCompatActivity {
         });
 
 
-        btn_confirm_pendaftaran1.setOnClickListener(new View.OnClickListener() {
+        btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 KonfirmasiDaftar();
             }
         });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == POLI_CODE){
+            if (resultCode == RESULT_OK){
+                String poli = data.getExtras().getString("Poli");
+                String dokter = data.getExtras().getString("Dokter");
+
+                input_poli.setText(poli);
+                lyt_input_poli.setHint("Poliklinik");
+                input_dokter.setText(dokter);
+                lyt_input_dokter.setHint("Dokter");
+
+            }
+        }
+
     }
 
     private void toolbarView() {
@@ -148,10 +161,10 @@ public class PendaftaranActivity extends AppCompatActivity {
 
     private void KonfirmasiDaftar() {
 
-        String Poliklinik = input_pilih_poliklinik1.getText().toString();
-        String Dokter = input_pilih_dokter1.getText().toString();
-        String Jam = input_pilih_jam1.getText().toString();
-        String Tanggal = input_pilih_tanggal.getText().toString();
+        String Poliklinik = input_poli.getText().toString();
+        String Dokter = input_dokter.getText().toString();
+        String Jam = input_jam.getText().toString();
+        String Tanggal = input_tanggal.getText().toString();
 
         if (TextUtils.isEmpty(Poliklinik)||TextUtils.isEmpty(Dokter)||TextUtils.isEmpty(Jam)||TextUtils.isEmpty(Tanggal)){
 
@@ -192,7 +205,7 @@ public class PendaftaranActivity extends AppCompatActivity {
             @Override
             public void onTimeSet(TimePicker timePicker, int hour, int minute) {
 
-                input_pilih_jam1.setText(hour+":"+minute);
+                input_jam.setText(hour+":"+minute);
 
             }
         }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), DateFormat.is24HourFormat(this));
