@@ -1,13 +1,17 @@
 package com.qtasnim.qhopes.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.balysv.materialripple.MaterialRippleLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.qtasnim.qhopes.R;
@@ -16,21 +20,23 @@ import java.util.List;
 
 public class BeritaAdapterHorizontal extends RecyclerView.Adapter<BeritaAdapterHorizontal.MyViewHolder> {
 
-    private List<Berita> mData;
-    private OnItemClickListener mOnItemClickListener;
+    private Context context;
+    private List<Berita> beritaList;
+    private BeritaListListener listener;
 
-    public interface OnItemClickListener {
-        void onItemClick(View view, Berita obj, int position);
+    public BeritaAdapterHorizontal(Context context, List<Berita> beritaList, BeritaListListener listener) {
+        this.context = context;
+        this.listener = listener;
+        this.beritaList = beritaList;
     }
 
-    public void setOnItemClickListener(OnItemClickListener mItemClickListener) {
-        this.mOnItemClickListener = mItemClickListener;
+    public interface BeritaListListener {
+        void onBeritaSelected(Berita berita);
     }
 
-    public BeritaAdapterHorizontal(List<Berita> mData) {
-        this.mData = mData;
+    public void setOnItemClickListener(BeritaListListener mItemClickListener) {
+        this.listener = mItemClickListener;
     }
-
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -41,7 +47,7 @@ public class BeritaAdapterHorizontal extends RecyclerView.Adapter<BeritaAdapterH
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Berita model = mData.get(position);
+        Berita model = beritaList.get(position);
         holder.mJudul.setText(model.getTitle());
         RequestOptions options = new RequestOptions()
                 .centerCrop()
@@ -51,11 +57,10 @@ public class BeritaAdapterHorizontal extends RecyclerView.Adapter<BeritaAdapterH
                 .apply(options)
                 .into(holder.mFoto);
         holder.mKonten.setText(model.getContent());
-        holder.view.setOnClickListener(new View.OnClickListener() {
+        holder.rpBerita.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mOnItemClickListener == null) return;
-               mOnItemClickListener.onItemClick(view, model,position);
+                listener.onBeritaSelected(beritaList.get(position));
             }
         });
     }
@@ -63,7 +68,7 @@ public class BeritaAdapterHorizontal extends RecyclerView.Adapter<BeritaAdapterH
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return beritaList.size();
     }
 
 
@@ -71,6 +76,9 @@ public class BeritaAdapterHorizontal extends RecyclerView.Adapter<BeritaAdapterH
         private View view;
         private TextView mJudul, mKonten;
         private ImageView mFoto;
+        private CardView cvBerita;
+        private RelativeLayout rlBerita;
+        private MaterialRippleLayout rpBerita;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -78,7 +86,10 @@ public class BeritaAdapterHorizontal extends RecyclerView.Adapter<BeritaAdapterH
             mJudul = itemView.findViewById(R.id.txt_title);
             mFoto = itemView.findViewById(R.id.img_thumb);
             mKonten = itemView.findViewById(R.id.txt_description);
-            this.view = itemView;
+            cvBerita = itemView.findViewById(R.id.cvBerita);
+            rlBerita = itemView.findViewById(R.id.rlBerita);
+            rpBerita = itemView.findViewById(R.id.rpBerita);
+            view = itemView;
         }
     }
 }

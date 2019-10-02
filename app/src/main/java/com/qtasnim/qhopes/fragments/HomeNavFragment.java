@@ -89,7 +89,8 @@ public class HomeNavFragment extends Fragment {
 
     @OnClick(R.id.btn_dokter)
     void dokter() {
-        startActivity(new Intent(getActivity(), JadwalDokterActivity.class));
+        startActivity(new Intent(getActivity(), JadwalDokterActivity.class)
+                .putExtra("src", "main"));
         getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
     }
 
@@ -233,8 +234,10 @@ public class HomeNavFragment extends Fragment {
                         cd.toastWarning("Lengkapi data yang diperlukan");
                     } else {
 
-                        Intent konfirmasiMedrek = new Intent(getActivity(), PendaftaranActivity.class);
-                        startActivity(konfirmasiMedrek);
+                        Intent i = new Intent(getActivity(), PendaftaranActivity.class)
+                                .putExtra("src", "daftar")
+                                .putExtra("NoMedrek", NoMedrek);
+                        startActivity(i);
 
                     }
 
@@ -278,15 +281,14 @@ public class HomeNavFragment extends Fragment {
     }
 
     private void generateBeritaView(List<Berita> beritaList) {
-        mAdapter = new BeritaAdapterHorizontal(beritaList);
+
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        mAdapter = new BeritaAdapterHorizontal(beritaList);
-        mAdapter.setOnItemClickListener(new BeritaAdapterHorizontal.OnItemClickListener() {
+        mAdapter = new BeritaAdapterHorizontal(getActivity(), beritaList, new BeritaAdapterHorizontal.BeritaListListener() {
             @Override
-            public void onItemClick(View view, Berita obj, int position) {
-                Log.e("berita click", obj.getTitle());
+            public void onBeritaSelected(Berita berita) {
+            Log.e("beritaSelected", berita.getTitle());
             }
         });
         recyclerView.setAdapter(mAdapter);

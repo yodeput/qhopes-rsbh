@@ -9,6 +9,8 @@ import androidx.annotation.Nullable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 public class JadwalDokter implements Parcelable {
     @Expose
     @SerializedName("id")
@@ -150,4 +152,19 @@ public class JadwalDokter implements Parcelable {
             return new JadwalDokter[size];
         }
     };
+
+
+    @Override
+    public String toString() {
+        return "JadwalDokter{" +
+                "id=" + id +
+                ", antri='" + antri + '\'' +
+                ", terlayani='" + terlayani + '\'' +
+                ", daftar='" + daftar + '\'' +
+                ", kuota='" + kuota + '\'' +
+                ", poli='" + poli + '\'' +
+                ", namaDokter='" + namaDokter + '\'' +
+                ", jadwal='" + jadwal + '\'' +
+                '}';
+    }
 }

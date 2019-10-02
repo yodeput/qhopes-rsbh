@@ -1,6 +1,7 @@
 package com.qtasnim.qhopes.activities;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,10 +33,12 @@ import com.qtasnim.qhopes.models.MenuHariiniModel;
 import com.qtasnim.qhopes.models.response.JadwalDokter;
 import com.qtasnim.qhopes.models.response.JadwalDokterResponse;
 import com.qtasnim.qhopes.utils.CustomDialog;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -55,6 +58,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.qtasnim.qhopes.utils.Apps.getDayName;
+
 
 public class JadwalDokterActivity extends AppCompatActivity {
 
@@ -63,6 +68,12 @@ public class JadwalDokterActivity extends AppCompatActivity {
     private TestExpandAdapter mAdapter;
     private List<JadwalDokter> dokterList;
     private NetworkService mNetworkService;
+
+    private String src;
+    private String tgl;
+
+    private DatePickerDialog datePickerDialog;
+    private int Year, Month, Day;
 
     @BindView(R.id.lytParent)
     LinearLayout lytParent;
@@ -87,7 +98,11 @@ public class JadwalDokterActivity extends AppCompatActivity {
         initClass();
         initToolbar();
         mNetworkService = NetworkModule.getClient().create(NetworkService.class);
-        getDokter();
+        initDatePicker();
+
+        Intent i = getIntent();
+        src = i.getStringExtra("src");
+
     }
 
     void initClass(){
@@ -176,11 +191,21 @@ public class JadwalDokterActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View view, JadwalDokter obj, int position) {
                 Log.e("Dokter",obj.getNamaDokter());
-                Intent data = new Intent();
-                data.putExtra("Poli", obj.getPoli());
-                data.putExtra("Dokter", obj.getNamaDokter());
-                setResult(RESULT_OK, data);
-                finish();
+                if(src.equals("daftar")) {
+                    Intent data = new Intent();
+                    data.putExtra("Poli", obj.getPoli());
+                    data.putExtra("Dokter", obj.getNamaDokter());
+                    setResult(RESULT_OK, data);
+                    finish();
+                } else {
+                    Intent i = new Intent(JadwalDokterActivity.this, PendaftaranActivity.class);
+                    i.putExtra("src", "dokter");
+                    i.putExtra("data", obj);
+                    i.putExtra("tanggal", tgl);
+                    startActivity(i);
+                    finish();
+                }
+
             }
         });
         shimmer.startShimmer();
@@ -208,5 +233,90 @@ public class JadwalDokterActivity extends AppCompatActivity {
     public static DokterGroup makeDokter(String poli, List<JadwalDokter> list) {
         return new DokterGroup(poli,list);
     }
+
+    void initDatePicker() {
+        Calendar calendar = Calendar.getInstance();
+        Year = calendar.get(Calendar.YEAR);
+        Month = calendar.get(Calendar.MONTH);
+        Day = calendar.get(Calendar.DAY_OF_MONTH);
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        Calendar min_date_c = Calendar.getInstance();
+        min_date_c.set(Calendar.DAY_OF_MONTH, Day + 1);
+        Calendar max_date_c = Calendar.getInstance();
+        Log.e("wkwkwwk", "-----" + day + Calendar.SUNDAY);
+        if (day == Calendar.SUNDAY) {
+            Log.e("wkwkwwk", "01");
+            max_date_c.set(Calendar.DAY_OF_MONTH, Day + 3);
+            datePickerDialog.setMaxDate(max_date_c);
+            showDatePicker(min_date_c, max_date_c);
+        } else if (day + 1 == 8) {
+            Log.e("wkwkwwk", "12");
+            max_date_c.set(Calendar.DAY_OF_MONTH, Day + 4);
+            showDatePicker(min_date_c, max_date_c);
+        } else if (day + 2 == 8) {
+            Log.e("wkwkwwk", "23");
+            max_date_c.set(Calendar.DAY_OF_MONTH, Day + 5);
+            showDatePicker(min_date_c, max_date_c);
+        } else if (day + 3 == 8) {
+            Log.e("wkwkwwk", "34");
+            max_date_c.set(Calendar.DAY_OF_MONTH, Day + 5);
+            showDatePicker(min_date_c, max_date_c);
+        } else if (day + 4 == 8) {
+            Log.e("wkwkwwk", "34");
+            max_date_c.set(Calendar.DAY_OF_MONTH, Day + 3);
+            showDatePicker(min_date_c, max_date_c);
+        } else {
+            max_date_c.set(Calendar.DAY_OF_MONTH, Day + 3);
+            showDatePicker(min_date_c, max_date_c);
+        }
+    }
+
+    private void showDatePicker(Calendar min_date_c, Calendar max_date_c) {
+
+        datePickerDialog = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar cal = Calendar.getInstance();
+                cal.setTimeInMillis(0);
+                cal.set(year, monthOfYear, dayOfMonth);
+                Date date = cal.getTime();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
+                SimpleDateFormat sdf_ = new SimpleDateFormat("EEEE");
+                Date day = cal.getTime();
+                String datetime = sdf.format(date);
+                String dayName = getDayName(sdf_.format(day));
+                tgl = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                getDokter();
+            }
+        }, Year, Month, Day);
+        datePickerDialog.setThemeDark(false);
+        datePickerDialog.setAccentColor(getResources().getColor(R.color.colorPrimary));
+        datePickerDialog.showYearPickerFirst(false);
+        datePickerDialog.setTitle("Pilih Tanggal Kunjungan");
+        datePickerDialog.setMinDate(min_date_c);
+        datePickerDialog.setMaxDate(max_date_c);
+
+        for (Calendar loopdate = min_date_c; min_date_c.before(max_date_c); min_date_c.add(Calendar.DATE, 1), loopdate = min_date_c) {
+            int dayOfWeek = loopdate.get(Calendar.DAY_OF_WEEK);
+            if (dayOfWeek == Calendar.SUNDAY) {
+                Calendar[] disabledDays = new Calendar[1];
+                disabledDays[0] = loopdate;
+                datePickerDialog.setDisabledDays(disabledDays);
+            }
+        }
+
+        datePickerDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                datePickerDialog.dismiss();
+                JadwalDokterActivity.this.finish();
+            }
+        });
+
+        datePickerDialog.show(getFragmentManager(), "DatePickerDialog");
+    }
+
+
 
 }
