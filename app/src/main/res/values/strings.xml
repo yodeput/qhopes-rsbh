@@ -4,6 +4,7 @@
     <string name="title_beranda">Home</string>
     <string name="title_myappointment">Appointment</string>
     <string name="title_daftar">Daftar</string>
+    <string  name="title_berita">Berita</string>
     <string name="title_diagnosis">Diagnosis</string>
     <string name="title_akun">Account</string>
     <string name="title_dokter">Jadwal Dokter</string>

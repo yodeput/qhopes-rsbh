@@ -1,9 +1,12 @@
 package com.qtasnim.qhopes.models.response;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Berita {
+public class Berita implements Parcelable {
     @Expose
     @SerializedName("datetime")
     private String datetime;
@@ -59,4 +62,50 @@ public class Berita {
     public void setId(int id) {
         this.id = id;
     }
+
+    public Berita(int id, String datetime, String title, String content, String image){
+        this.image=image;
+        this.content=content;
+        this.title=title;
+        this.id=id;
+        this.datetime=datetime;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int i) {
+        dest.writeInt(id);
+        dest.writeString(title);
+        dest.writeString(content);
+        dest.writeString(image);
+        dest.writeString(datetime);
+    }
+
+    public Berita(){
+    }
+
+    protected Berita(Parcel in){
+        id = in.readInt();
+        title = in.readString();
+        content = in.readString();
+        image = in.readString();
+        datetime = in.readString();
+    }
+
+    public static final Creator<Berita> CREATOR = new Creator<Berita>() {
+        @Override
+        public Berita createFromParcel(Parcel parcel) {
+            return new Berita(parcel);
+        }
+
+        @Override
+        public Berita[] newArray(int i) {
+            return new Berita[0];
+        }
+    };
+
 }

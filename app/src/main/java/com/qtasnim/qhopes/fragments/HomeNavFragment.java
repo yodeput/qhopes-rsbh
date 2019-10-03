@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -31,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.qtasnim.qhopes.R;
+import com.qtasnim.qhopes.activities.DetailBeritaActivity;
 import com.qtasnim.qhopes.activities.JadwalDokterActivity;
 import com.qtasnim.qhopes.activities.PendaftaranActivity;
 import com.qtasnim.qhopes.adapters.BeritaAdapterHorizontal;
@@ -82,6 +84,8 @@ public class HomeNavFragment extends Fragment {
     private Dialog dialog;
     private int year, month, day;
 
+    private String key;
+
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.sliderView)
@@ -107,6 +111,9 @@ public class HomeNavFragment extends Fragment {
         initClass();
         getBerita();
         getSlider();
+
+        Intent kunci = getActivity().getIntent();
+        key = kunci.getStringExtra("id");
 
         return rootView;
     }
@@ -288,7 +295,11 @@ public class HomeNavFragment extends Fragment {
         mAdapter = new BeritaAdapterHorizontal(getActivity(), beritaList, new BeritaAdapterHorizontal.BeritaListListener() {
             @Override
             public void onBeritaSelected(Berita berita) {
-            Log.e("beritaSelected", berita.getTitle());
+                Log.e("berita", berita.getTitle());
+                    Intent i = new Intent(getActivity(), DetailBeritaActivity.class);
+                    i.putExtra("key", "berita");
+                    i.putExtra("id", berita);
+                    startActivity(i);
             }
         });
         recyclerView.setAdapter(mAdapter);
